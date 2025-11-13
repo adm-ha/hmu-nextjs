@@ -1,9 +1,9 @@
-// src/components/Navbar.tsx (DYNAMIC LOGO)
+// src/components/Navbar.tsx (FIXED LOGO WARNING)
 "use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+// import Image from 'next/image'; // No longer needed for the logo
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './theme-toggle'; 
@@ -21,26 +21,20 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           
-          {/* --- DYNAMIC LOGO --- */}
+          {/* --- DYNAMIC LOGO (using <img> tag) --- */}
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-2">
               {/* Light Mode Logo (hides in dark mode) */}
-              <Image
+              <img
                 src="/hmu-logo-dark.svg"
                 alt="HireMeUp Logo"
-                width={150}
-                height={36}
                 className="h-9 w-auto dark:hidden"
-                priority
               />
               {/* Dark Mode Logo (hides in light mode) */}
-              <Image
+              <img
                 src="/HMU-Logo-Light.svg"
                 alt="HireMeUp Logo"
-                width={150}
-                height={36}
                 className="h-9 w-auto hidden dark:block"
-                priority
               />
             </Link>
           </div>
