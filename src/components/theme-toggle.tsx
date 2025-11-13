@@ -1,4 +1,4 @@
-// src/components/theme-toggle.tsx (THEME-AWARE)
+// src/components/theme-toggle.tsx
 "use client"
 
 import * as React from "react"
@@ -19,7 +19,7 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      // This className makes it visible in both light and dark mode
+      // This class makes it visible in light and dark mode
       className="text-gray-700 dark:text-gray-300 hover:text-primary-green hover:bg-black/10 dark:hover:bg-white/10"
     >
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
