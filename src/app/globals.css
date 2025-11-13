@@ -57,13 +57,29 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
+
+  /* --- NEW: Smooth Scroll --- */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* --- NEW: Glow Effect for Waitlist Section --- */
+#waitlist-form-section {
+  /* This is the base state (no glow) */
+  transition: all 0.5s ease-in-out;
+  /* The shadow will follow the existing responsive border-radius */
+}
+
+#waitlist-form-section:target {
+  /* This is the "active" state when you scroll to it */
+  box-shadow: 0 0 30px 10px rgba(156, 222, 71, 0.4); /* Your #9cde47 green glow */
+  transform: scale(1.01); /* A subtle "pop" to draw the eye */
 }
