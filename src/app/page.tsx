@@ -1,4 +1,5 @@
 // src/app/page.tsx (REMOVING h-full)
+// THIS IS A TEST COMMENT TO FORCE A CHANGE
 "use client";
 
 import { motion } from 'framer-motion';
