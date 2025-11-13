@@ -1,4 +1,4 @@
-// src/components/Navbar.tsx (FIXED HAMBURGER VISIBILITY)
+// src/components/Navbar.tsx (MOBILE SCROLL FIX)
 "use client";
 
 import { useState } from 'react';
@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './theme-toggle'; 
+import { useRouter } from 'next/navigation'; // <-- 1. NEW IMPORT
 
 const NAV_LINKS = [
   { name: 'My Status', href: '/status' },
@@ -15,6 +16,15 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] =useState(false);
+  const router = useRouter(); // <-- 2. INITIALIZE ROUTER
+
+  // --- 3. NEW HANDLER FUNCTION FOR MOBILE SCROLL ---
+  const handleScrollToWaitlist = () => {
+    setIsMenuOpen(false); // Close the menu immediately
+    // Use router.push to force navigation/scroll after state is updated
+    router.push('/#waitlist-form-section'); 
+  };
+  // ----------------------------------------------------
 
   return (
     <nav className="sticky top-0 z-50 border-b border-black/10 bg-white/30 dark:border-white/10 dark:bg-black/30 backdrop-blur-lg">
@@ -53,7 +63,7 @@ export function Navbar() {
           {/* Right Side: Waitlist Button & Theme Toggle (Desktop) */}
           <div className="hidden md:flex md:items-center space-x-2">
             <motion.a
-              href="/#waitlist-form-section"
+              href="/#waitlist-form-section" // Desktop link is fine as anchor scroll
               whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgba(139, 92, 246, 0.5)" }}
               whileTap={{ scale: 0.95 }}
               className="rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:from-purple-700 hover:to-indigo-700"
@@ -63,9 +73,7 @@ export function Navbar() {
             <ThemeToggle />
           </div>
 
-          {/* Mobile Menu Button & Toggle (Mobile) */}
-          {/* --- THIS IS THE FIX --- */}
-          {/* Added justify-end to ensure the elements are pushed fully to the right */}
+          {/* Mobile Menu Button & Toggle */}
           <div className="flex items-center justify-end md:hidden">
             <ThemeToggle />
             <button
@@ -76,7 +84,6 @@ export function Navbar() {
               {isMenuOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
             </button>
           </div>
-          {/* --- END OF FIX --- */}
         </div>
       </div>
 
@@ -101,11 +108,11 @@ export function Navbar() {
                 </Link>
               ))}
               <motion.a
-                href="/#waitlist-form-section"
-                onClick={() => setIsMenuOpen(false)}
+                // --- 4. USE THE HANDLER ---
+                onClick={handleScrollToWaitlist} // Call our function instead of direct click
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full block text-center rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:from-purple-700 hover:to-indigo-700"
+                className="w-full block text-center rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:from-purple-700 hover:to-indigo-700 cursor-pointer"
               >
                 Join Waitlist
               </motion.a>
