@@ -1,13 +1,12 @@
-// src/components/Navbar.tsx (MOBILE SCROLL FIX)
+// src/components/Navbar.tsx (UPDATED CONDITIONAL BUTTON)
 "use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './theme-toggle'; 
-import { useRouter } from 'next/navigation'; // <-- 1. NEW IMPORT
+import { useRouter, usePathname } from 'next/navigation'; // <-- 1. NEW IMPORT: usePathname
 
 const NAV_LINKS = [
   { name: 'My Status', href: '/status' },
@@ -16,15 +15,19 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] =useState(false);
-  const router = useRouter(); // <-- 2. INITIALIZE ROUTER
+  const router = useRouter(); 
+  const pathname = usePathname(); // <-- 2. Get current path
 
-  // --- 3. NEW HANDLER FUNCTION FOR MOBILE SCROLL ---
+  // --- 3. CONDITIONAL LOGIC ---
+  const isStatusOrLeaderboard = pathname === '/status' || pathname === '/leaderboard';
+  const buttonText = isStatusOrLeaderboard ? 'Refer Friends!' : 'Join Waitlist';
+  const buttonHref = '/#waitlist-form-section'; 
+
   const handleScrollToWaitlist = () => {
     setIsMenuOpen(false); // Close the menu immediately
-    // Use router.push to force navigation/scroll after state is updated
-    router.push('/#waitlist-form-section'); 
+    router.push(buttonHref); // Use the router to handle navigation/scroll
   };
-  // ----------------------------------------------------
+  // ---------------------------
 
   return (
     <nav className="sticky top-0 z-50 border-b border-black/10 bg-white/30 dark:border-white/10 dark:bg-black/30 backdrop-blur-lg">
@@ -63,12 +66,12 @@ export function Navbar() {
           {/* Right Side: Waitlist Button & Theme Toggle (Desktop) */}
           <div className="hidden md:flex md:items-center space-x-2">
             <motion.a
-              href="/#waitlist-form-section" // Desktop link is fine as anchor scroll
+              href={buttonHref} // Use the universal href
               whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgba(139, 92, 246, 0.5)" }}
               whileTap={{ scale: 0.95 }}
               className="rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:from-purple-700 hover:to-indigo-700"
             >
-              Join Waitlist
+              {buttonText} {/* <-- Use conditional text */}
             </motion.a>
             <ThemeToggle />
           </div>
@@ -108,13 +111,12 @@ export function Navbar() {
                 </Link>
               ))}
               <motion.a
-                // --- 4. USE THE HANDLER ---
-                onClick={handleScrollToWaitlist} // Call our function instead of direct click
+                onClick={handleScrollToWaitlist}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-full block text-center rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:from-purple-700 hover:to-indigo-700 cursor-pointer"
               >
-                Join Waitlist
+                {buttonText} {/* <-- Use conditional text */}
               </motion.a>
             </div>
           </motion.div>

@@ -1,5 +1,4 @@
-// src/app/page.tsx (REMOVING h-full)
-// THIS IS A TEST COMMENT TO FORCE A CHANGE
+// src/app/page.tsx
 "use client";
 
 import { motion } from 'framer-motion';
@@ -40,14 +39,11 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-          // --- REMOVED h-full from here ---
           className="grid grid-cols-1 overflow-hidden bg-white/70 dark:bg-black/30 shadow-2xl md:grid-cols-2"
         >
           
           {/* Left Column as Background Image */}
           <div 
-            // --- REMOVED h-full from here ---
-            // md:flex will make it stretch to the grid cell height
             className="hidden md:relative md:flex flex-col items-center justify-center p-8 md:p-12 overflow-hidden bg-cover bg-center rounded-l-[25px]"
             style={{ backgroundImage: `url('/my-app-image.png')` }}
           >
@@ -56,8 +52,6 @@ export default function HomePage() {
 
           {/* Right Container - Viral Loops Form */}
           <div 
-            // --- REMOVED h-full from here ---
-            // This column's natural height will now define the row height
             className="flex flex-col items-start p-8 text-start md:p-12 rounded-[25px] md:rounded-l-none md:rounded-r-[25px] bg-white dark:bg-image-container"
           >
             <h3 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -66,7 +60,6 @@ export default function HomePage() {
             <p className="mt-4 text-lg text-gray-700 dark:text-gray-300">
               Unlock exclusive benefits by sharing your referral link.
             </p>
-            {/* --- ADDED flex-grow to make this div fill the space --- */}
             <div className="mt-8 w-full max-w-md flex-grow">
               <ViralLoopsWidget />
             </div>

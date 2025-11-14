@@ -1,10 +1,16 @@
-// src/hooks/use-waitlist-user.ts (NEW FILE)
+// src/hooks/use-waitlist-user.ts (UPDATED)
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
 
-// This is the data structure we'll store
-export type WaitlistUserStatus = 'New Seeker' | 'Rising Talent' | 'Inner Circle';
+// Define all 6 custom status levels
+export type WaitlistUserStatus = 
+  | 'On the List' 
+  | 'Insider' 
+  | 'Main Character' 
+  | 'Power Up' 
+  | 'G.O.A.T' 
+  | 'Join the Movement'; // Used when localStorage is empty
 
 export interface WaitlistUser {
   email: string;
@@ -13,16 +19,17 @@ export interface WaitlistUser {
   referralCode: string;
 }
 
-// Helper function to get the status level
+// Updated logic to determine the status level based on referrals
 function getStatusLevel(referrals: number): WaitlistUserStatus {
-  if (referrals >= 10) return 'Inner Circle';
-  if (referrals >= 5) return 'Rising Talent';
-  return 'New Seeker';
+  if (referrals >= 10) return 'G.O.A.T';
+  if (referrals >= 5) return 'Power Up';
+  if (referrals >= 2) return 'Main Character';
+  if (referrals >= 1) return 'Insider';
+  return 'On the List'; // 0 referrals
 }
 
 const STORAGE_KEY = 'waitlistUser';
 
-// A custom hook to safely access localStorage
 export function useWaitlistUser() {
   const [user, setUser] = useState<WaitlistUser | null>(null);
 
@@ -32,6 +39,14 @@ export function useWaitlistUser() {
       const storedUser = localStorage.getItem(STORAGE_KEY);
       if (storedUser) {
         setUser(JSON.parse(storedUser));
+      } else {
+        // If no user data is found, set the status to the initial unjoined state
+        setUser({
+          email: '',
+          referralCount: 0,
+          statusLevel: 'Join the Movement',
+          referralCode: '',
+        });
       }
     } catch (error) {
       console.error("Failed to parse user from localStorage", error);
@@ -39,7 +54,6 @@ export function useWaitlistUser() {
     }
   }, []);
 
-  // Function to save a new user (called by Viral Loops)
   const saveUser = useCallback((email: string, referralCode: string, referrals: number = 0) => {
     const newUser: WaitlistUser = {
       email,
@@ -50,7 +64,6 @@ export function useWaitlistUser() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
       setUser(newUser);
-      console.log('Waitlist user saved to localStorage', newUser);
     } catch (error) {
       console.error("Failed to save user to localStorage", error);
     }
@@ -60,7 +73,13 @@ export function useWaitlistUser() {
   const clearUser = useCallback(() => {
     try {
       localStorage.removeItem(STORAGE_KEY);
-      setUser(null);
+      // Reset user to the "unjoined" state
+      setUser({
+        email: '',
+        referralCount: 0,
+        statusLevel: 'Join the Movement',
+        referralCode: '',
+      });
     } catch (error) {
       console.error("Failed to clear user from localStorage", error);
     }

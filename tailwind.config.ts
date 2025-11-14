@@ -1,4 +1,4 @@
-// tailwind.config.ts (UPDATED WITH YOUR CUSTOM COLORS)
+// tailwind.config.ts
 import type { Config } from "tailwindcss"
 
 const config = {
@@ -18,17 +18,20 @@ const config = {
       },
     },
     extend: {
-      // --- THIS IS YOUR CUSTOM FONT ---
       fontFamily: {
         sans: ["var(--font-encode-sans)", "sans-serif"],
       },
-      // --- END CUSTOM FONT ---
       colors: {
-        // --- ADDING YOUR CUSTOM COLORS HERE ---
+        // --- Custom Status Colors ---
+        'status-insider': '#ff974f',
+        'status-main-character': '#cb171a',
+        'status-power-up': '#9cde47',
+        'status-goat': '#9f7af5',
+        // --- End Status Colors ---
+
         'primary-green': '#9cde47',
         'image-container': '#211b43',
-        // --- END OF CUSTOM COLORS ---
-
+        
         // shadcn/ui colors
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
