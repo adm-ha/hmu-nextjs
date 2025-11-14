@@ -1,4 +1,4 @@
-// src/app/page.tsx (BACKGROUND FIXED)
+// src/app/page.tsx (THEME-AWARE BACKGROUND)
 "use client";
 
 import { motion } from 'framer-motion';
@@ -7,11 +7,11 @@ import { ViralLoopsWidget } from '@/components/ViralLoopsWidget';
 export default function HomePage() {
   return (
     // --- THIS IS THE FIX ---
-    // 1. This wrapper applies the background in BOTH light and dark mode
+    // Added `dark:` prefix. In light mode, this will just be a min-h-full div.
     <div
-      className="min-h-full bg-cover bg-fixed bg-center bg-[url('/my-background.png')]"
+      className="min-h-full bg-cover bg-fixed bg-center dark:bg-[url('/my-background.png')]"
     >
-      {/* 2. This overlay applies ONLY in dark mode */}
+      {/* This overlay still only applies in dark mode */}
       <div className="min-h-full dark:bg-black/40 dark:backdrop-blur-sm">
     {/* --- END OF FIX --- */}
 
@@ -49,6 +49,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+              // These theme-aware classes are already correct
               className="grid grid-cols-1 overflow-hidden bg-white/70 dark:bg-black/30 shadow-2xl md:grid-cols-2"
             >
               {/* Left Column */}

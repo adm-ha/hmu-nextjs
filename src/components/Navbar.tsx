@@ -1,12 +1,13 @@
-// src/components/Navbar.tsx (UPDATED CONDITIONAL BUTTON)
+// src/components/Navbar.tsx (DARK HOVER FIX)
 "use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // We are using <img> now, but keeping this for future
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './theme-toggle'; 
-import { useRouter, usePathname } from 'next/navigation'; // <-- 1. NEW IMPORT: usePathname
+import { useRouter, usePathname } from 'next/navigation';
 
 const NAV_LINKS = [
   { name: 'My Status', href: '/status' },
@@ -16,18 +17,12 @@ const NAV_LINKS = [
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] =useState(false);
   const router = useRouter(); 
-  const pathname = usePathname(); // <-- 2. Get current path
-
-  // --- 3. CONDITIONAL LOGIC ---
-  const isStatusOrLeaderboard = pathname === '/status' || pathname === '/leaderboard';
-  const buttonText = isStatusOrLeaderboard ? 'Refer Friends!' : 'Join Waitlist';
-  const buttonHref = '/#waitlist-form-section'; 
+  const pathname = usePathname();
 
   const handleScrollToWaitlist = () => {
-    setIsMenuOpen(false); // Close the menu immediately
-    router.push(buttonHref); // Use the router to handle navigation/scroll
+    setIsMenuOpen(false);
+    router.push('/#waitlist-form-section'); 
   };
-  // ---------------------------
 
   return (
     <nav className="sticky top-0 z-50 border-b border-black/10 bg-white/30 dark:border-white/10 dark:bg-black/30 backdrop-blur-lg">
@@ -52,26 +47,32 @@ export function Navbar() {
 
           {/* Nav Links (Center) */}
           <div className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8 md:ml-auto md:mr-auto">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="rounded-md px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-200 ease-in-out hover:text-primary-green"
-              >
-                {link.name}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  // --- THIS IS THE FIX ---
+                  className={`rounded-md px-3 py-2 text-sm text-gray-700 dark:text-gray-300 transition-colors duration-200 ease-in-out hover:text-primary-green dark:hover:text-primary-green
+                    ${isActive ? 'font-extrabold' : 'font-semibold'}
+                  `}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Right Side: Waitlist Button & Theme Toggle (Desktop) */}
           <div className="hidden md:flex md:items-center space-x-2">
             <motion.a
-              href={buttonHref} // Use the universal href
+              href="/#waitlist-form-section"
               whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgba(139, 92, 246, 0.5)" }}
               whileTap={{ scale: 0.95 }}
               className="rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:from-purple-700 hover:to-indigo-700"
             >
-              {buttonText} {/* <-- Use conditional text */}
+              Refer Friends!
             </motion.a>
             <ThemeToggle />
           </div>
@@ -100,23 +101,29 @@ export function Navbar() {
             className="overflow-hidden md:hidden border-t border-black/10 dark:border-white/10"
           >
             <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block rounded-md px-3 py-2 text-base font-semibold text-gray-700 dark:text-gray-300 transition-colors duration-200 ease-in-out hover:bg-black/10 dark:hover:bg-white/10 hover:text-primary-green"
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {NAV_LINKS.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    // --- THIS IS THE FIX ---
+                    className={`block rounded-md px-3 py-2 text-base text-gray-700 dark:text-gray-300 transition-colors duration-200 ease-in-out hover:bg-black/10 dark:hover:bg-white/10 hover:text-primary-green dark:hover:text-primary-green
+                      ${isActive ? 'font-extrabold' : 'font-semibold'}
+                    `}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
               <motion.a
                 onClick={handleScrollToWaitlist}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-full block text-center rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:from-purple-700 hover:to-indigo-700 cursor-pointer"
               >
-                {buttonText} {/* <-- Use conditional text */}
+                Refer Friends!
               </motion.a>
             </div>
           </motion.div>
