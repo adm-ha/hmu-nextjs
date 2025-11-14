@@ -66,7 +66,7 @@ export const STATUS_LEVELS: StatusLevelData[] = [
     minReferrals: 10,
     title: "G.O.A.T",
     logo: "/goat-badge.svg",
-    icon: "/goat-mini-badge.svg",
+    icon: "/goat-badge-mini.svg",
     color: "status-goat",
     shadowColor: "#9f7af5",
     benefits: [

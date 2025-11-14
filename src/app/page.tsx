@@ -1,4 +1,4 @@
-// src/app/page.tsx
+// src/app/page.tsx (BACKGROUND FIXED)
 "use client";
 
 import { motion } from 'framer-motion';
@@ -7,11 +7,11 @@ import { ViralLoopsWidget } from '@/components/ViralLoopsWidget';
 export default function HomePage() {
   return (
     // --- THIS IS THE FIX ---
-    // This wrapper applies the background in BOTH light and dark mode
+    // 1. This wrapper applies the background in BOTH light and dark mode
     <div
       className="min-h-full bg-cover bg-fixed bg-center bg-[url('/my-background.png')]"
     >
-      {/* This overlay applies ONLY in dark mode */}
+      {/* 2. This overlay applies ONLY in dark mode */}
       <div className="min-h-full dark:bg-black/40 dark:backdrop-blur-sm">
     {/* --- END OF FIX --- */}
 

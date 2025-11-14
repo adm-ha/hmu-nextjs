@@ -13,17 +13,8 @@ export function ViralLoopsWidget() {
   
   useEffect(() => {
     // --- Environment Settings ---
-    const PROD_CAMPAIGN_ID = 'MMH9S7vPz7pWTE4HvM0ohBpAIYA';
-    const STAGING_CAMPAIGN_ID = 'F2KeFLmT4nXJfYnzF1fNL7eMNS8';
-    const PROD_HOSTNAME = 'www.hiremeup.com';
-    // --- End of Settings ---
-
-    let CAMPAIGN_ID: string;
-    if (typeof window !== 'undefined' && window.location.hostname === PROD_HOSTNAME) {
-      CAMPAIGN_ID = PROD_CAMPAIGN_ID;
-    } else {
-      CAMPAIGN_ID = STAGING_CAMPAIGN_ID;
-    }
+    const CAMPAIGN_ID = 'FAL62ijzCKp4PDGyRw6Daj1MG3w';
+    console.log('[ViralLoopsWidget] Using Campaign ID: ' + CAMPAIGN_ID);
 
     // This function just injects the HTML
     const injectWidget = () => {

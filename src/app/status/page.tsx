@@ -1,11 +1,11 @@
-// src/app/status/page.tsx
+// src/app/status/page.tsx (UPDATED CAMPAIGN ID)
 "use client";
 
 import { PageContent } from "@/components/PageContent";
 import { useWaitlistUser, WaitlistUserStatus } from "@/hooks/use-waitlist-user";
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-// import Image from 'next/image'; // Changed to <img>
+// import Image from 'next/image';
 import { STATUS_LEVELS } from "@/lib/status-data";
 import { CheckCircle } from "lucide-react";
 import React, { useEffect } from "react";
@@ -55,13 +55,10 @@ export default function MyStatusPage() {
   const dynamicUsername = username.split(' ').map(name => name.charAt(0).toUpperCase() + name.slice(1)).join(' ');
 
   return (
-    // --- THIS IS THE FIX ---
-    // Added the background wrapper divs
     <div
-      className="min-h-full bg-cover bg-fixed bg-center bg-[url('/Hero-BG-Mock%20Guy%20(Large).png')]"
+      className="min-h-full bg-cover bg-fixed bg-center bg-[url('/hero-bg-mock-guy.png')]"
     >
       <div className="min-h-full dark:bg-black/40 dark:backdrop-blur-sm">
-    {/* --- END OF FIX --- */}
     
         <motion.div 
           className="py-16 sm:py-24"
@@ -103,7 +100,7 @@ export default function MyStatusPage() {
                   </h1>
                 </div>
 
-                {/* --- MAIN WIDGET CARD --- */}
+                {/* --- MAIN WWIDGET CARD --- */}
                 <motion.div
                   id="waitlist-form-section" 
                   initial={{ opacity: 0, y: 20 }}
@@ -113,13 +110,16 @@ export default function MyStatusPage() {
                 >
                   {/* Left Column: Widgets (Stacked & Centered) */}
                   <div className="flex flex-col items-center justify-center p-8 md:p-12 space-y-8 rounded-l-[25px] bg-white dark:bg-image-container">
+                    
+                    {/* --- THIS IS THE FIX --- */}
                     <VlHtmlWidget 
-                      htmlString={`<referral-url-widget ucid='F2KeFLmT4nXJfYnzF1fNL7eMNS8'></referral-url-widget>`}
+                      htmlString={`<referral-url-widget ucid='FAL62ijzCKp4PDGyRw6Daj1MG3w'></referral-url-widget>`}
                     />
                     <hr className="w-full border-gray-300 dark:border-gray-600" />
                     <VlHtmlWidget 
-                      htmlString={`<progress-tracking-widget ucid='F2KeFLmT4nXJfYnzF1fNL7eMNS8'></progress-tracking-widget>`}
+                      htmlString={`<progress-tracking-widget ucid='FAL62ijzCKp4PDGyRw6Daj1MG3w'></progress-tracking-widget>`}
                     />
+                    {/* --- END OF FIX --- */}
                   </div>
 
                   {/* Right Column: Image */}
@@ -183,13 +183,24 @@ export default function MyStatusPage() {
                         alt={`${status.title} Badge`} 
                         className="mx-auto mb-4 w-full max-w-[150px] h-auto"
                       />
-                      <h3 className={`text-2xl font-bold mb-1 text-center ${isCurrent ? `text-${status.color}` : 'text-gray-900 dark:text-white'}`}>
-                        {status.title}
-                      </h3>
+                      
+                      <div className="flex items-center justify-center gap-2">
+                        <img 
+                          src={status.icon} 
+                          alt={`${status.title} icon`} 
+                          className="h-8 w-auto"
+                        />
+                        <h3 className={`text-2xl font-bold ${isCurrent ? `text-${status.color}` : 'text-gray-900 dark:text-white'}`}>
+                          {status.title}
+                        </h3>
+                      </div>
                       
                       <hr className="border-gray-300 dark:border-gray-700/50 my-4" />
 
-                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Benefits:</h4>
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 text-center">
+                        Benefits:
+                      </h4>
+
                       <BenefitList benefits={status.benefits} />
                       
                       <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
