@@ -2,6 +2,8 @@
 "use client";
 
 import { useEffect } from "react";
+// We no longer need the hook here, as the global script handles saving
+// import { useWaitlistUser } from '@/hooks/use-waitlist-user';
 
 declare global {
   interface Window {

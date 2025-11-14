@@ -1,4 +1,4 @@
-// src/app/status/page.tsx (THEME-AWARE BACKGROUND)
+// src/app/status/page.tsx (UPDATED CAMPAIGN ID)
 "use client";
 
 import { PageContent } from "@/components/PageContent";
@@ -47,7 +47,6 @@ export default function MyStatusPage() {
   // 1. Show loading state
   if (!user) {
     return (
-      // --- THIS IS THE FIX ---
       <div className="bg-cover bg-fixed bg-center dark:bg-[url('/hero-bg-mock-guy.png')]">
         <div className="dark:bg-black/40 dark:backdrop-blur-sm">
           <PageContent title="Loading Status..." />
@@ -62,12 +61,10 @@ export default function MyStatusPage() {
   const dynamicUsername = username.split(' ').map(name => name.charAt(0).toUpperCase() + name.slice(1)).join(' ');
 
   return (
-    // --- THIS IS THE FIX ---
     <div
       className="min-h-full bg-cover bg-fixed bg-center dark:bg-[url('/hero-bg-mock-guy.png')]"
     >
       <div className="min-h-full dark:bg-black/40 dark:backdrop-blur-sm">
-    {/* --- END OF FIX --- */}
     
         <motion.div 
           className="py-16 sm:py-24"
@@ -119,6 +116,8 @@ export default function MyStatusPage() {
                 >
                   {/* Left Column: Widgets (Stacked & Centered) */}
                   <div className="flex flex-col items-center justify-center p-8 md:p-12 space-y-8 rounded-l-[25px] bg-white dark:bg-image-container">
+                    
+                    {/* --- THIS IS THE FIX --- */}
                     <VlHtmlWidget 
                       htmlString={`<referral-url-widget ucid='FAL62ijzCKp4PDGyRw6Daj1MG3w'></referral-url-widget>`}
                     />
@@ -126,6 +125,7 @@ export default function MyStatusPage() {
                     <VlHtmlWidget 
                       htmlString={`<progress-tracking-widget ucid='FAL62ijzCKp4PDGyRw6Daj1MG3w'></progress-tracking-widget>`}
                     />
+                    {/* --- END OF FIX --- */}
                   </div>
 
                   {/* Right Column: Image */}
